@@ -7,16 +7,21 @@ const StyledContainer = styled.main`
   justify-content: center;
 `;
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-};
-
-const handleChange = (e) => {
-  e.preventDefault();
-  console.log(e.target.value);
-};
-
 export default function Home() {
+  const [toDo, setTodo] = useState([]);
+  // todo get this submisson of to do item to display on page possibly make another component for to list items
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ toDo });
+  };
+
+  // function to handle the text being typed
+  const handleChange = (e) => {
+    e.preventDefault();
+    setTodo(e.currentTarget.value);
+    //console.log(e.target.value);
+  };
+
   return (
     <div>
       <Head>
@@ -28,11 +33,19 @@ export default function Home() {
       <StyledContainer>
         <form onSubmit={handleSubmit}>
           <label>
-            ToDo
-            <input onChange={handleChange} type="text" name="name" />
+            ToDo's
+            <input
+              name="todo"
+              type="text"
+              value={toDo}
+              onChange={handleChange}
+            />
           </label>
-          <input type="submit" value="Submit" />
+          <button>Submit</button>
         </form>
+      </StyledContainer>
+      <StyledContainer>
+        <p>{toDo}</p>
       </StyledContainer>
     </div>
   );
