@@ -1,26 +1,21 @@
 import Head from "next/head";
 import { useState } from "react";
 import styled from "styled-components";
+import useInputState from "../components/useInputState";
 
 const StyledContainer = styled.main`
   display: flex;
   justify-content: center;
 `;
 
-export default function Home() {
-  const [toDo, setTodo] = useState([]);
-  // todo get this submisson of to do item to display on page possibly make another component for to list items
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ toDo });
-  };
+export default function Home({ setToDo }) {
+  const { value, reset, onChange } = useInputState("");
 
-  // function to handle the text being typed
-  const handleChange = (e) => {
-    e.preventDefault();
-    setTodo(e.currentTarget.value);
-    //console.log(e.target.value);
-  };
+  //  const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log({ toDo });
+  // };
+  //todo figure out how to save to do list on submit of form fix export structure for components have a next js error
 
   return (
     <div>
@@ -31,21 +26,22 @@ export default function Home() {
       <h1>To do app</h1>
 
       <StyledContainer>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            setToDo(value);
+            reset("");
+          }}
+        >
           <label>
             ToDo's
-            <input
-              name="todo"
-              type="text"
-              value={toDo}
-              onChange={handleChange}
-            />
+            <input name="todo" type="text" value={value} onChange={onChange} />
           </label>
           <button>Submit</button>
         </form>
       </StyledContainer>
       <StyledContainer>
-        <p>{toDo}</p>
+        <p></p>
       </StyledContainer>
     </div>
   );
